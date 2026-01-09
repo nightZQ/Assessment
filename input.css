@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-family-inter: "Inter", sans-serif;
+  
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+  
+  --color-primary: #0052CC;
+  --color-secondary: #E8F0FE;
+  --color-primaryText: #333333;
+  --color-secondaryText: #666666;
+  --color-border: #E5E5E5;
+  --color-bgMain: #FFFFFF;
+  --color-bgAlt: #F8F9FA;
+  --color-success: #36B37E;
+  --color-vip: #FFD700;
+  --color-muted: #9EA6B3;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background-main);
+  font-family: var(--font-family-inter);
+}
+
+/* Typography */
+
+.text__title {
+  @apply text-[24px] font-bold text-primaryText;
+}
+
+.text__subtitle {
+  @apply text-[14px] text-secondaryText;
+}
+
+.text__tableHeader {
+  @apply bg-primary text-[14px] font-medium text-white;
+}
+
+.text__tableContent {
+  @apply bg-bgMain text-[14px];
+}
+
+.text__tableContent--alt {
+  @apply bg-bgAlt text-[14px];
+}
+
+.text__idNumber {
+  @apply text-[12px] text-muted;
+}
+
+/* Button */
+
+.button__primary {
+  @apply bg-primary text-white p-4;
+}
+
+.button__secondary {
+  @apply bg-white border border-primary text-primary p-4;
+}
+
+.button__icon {
+  @apply text-gray-500 p-2;
+}
+
+.button__icon:hover {
+  @apply text-primary;
+}
+
+/* Navbar */
+
+.navbar__item {
+  @apply flex gap-2 items-center text-2xl font-bold text-primaryText;
+}
+
+.navbar__item:hover {
+  @apply text-primary;
+}
+
+.navbar__item--active {
+  @apply text-primary;
+}
+
+.navbar__badge {
+  @apply rounded-full bg-red-600 px-2 py-1 text-white text-[12px] font-medium;
+}
