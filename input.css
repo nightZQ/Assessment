@@ -56,11 +56,11 @@ body {
 /* Button */
 
 .button__primary {
-  @apply bg-primary text-white p-4;
+  @apply bg-primary rounded-full text-white;
 }
 
 .button__secondary {
-  @apply bg-white border border-primary text-primary p-4;
+  @apply bg-white rounded-full border border-primary border-2 text-primary;
 }
 
 .button__icon {
@@ -74,7 +74,7 @@ body {
 /* Navbar */
 
 .navbar__item {
-  @apply flex gap-2 items-center text-2xl font-bold text-primaryText;
+  @apply flex gap-0.5 md:gap-2 items-center text-2xl font-bold text-primaryText;
 }
 
 .navbar__item:hover {
@@ -86,5 +86,5 @@ body {
 }
 
 .navbar__badge {
-  @apply rounded-full bg-red-600 px-2 py-1 text-white text-[12px] font-medium;
-}
+  @apply aspect-video w-5 md:w-6 rounded-full bg-red-600 md:px-2 py-1 text-center text-white text-[10px] md:text-[12px] font-medium;
+} 
