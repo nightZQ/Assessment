@@ -37,20 +37,14 @@ body {
   @apply text-[14px] text-secondaryText;
 }
 
-.text__tableHeader {
-  @apply bg-primary text-[14px] font-medium text-white;
-}
-
-.text__tableContent {
-  @apply bg-bgMain text-[14px];
-}
-
-.text__tableContent--alt {
-  @apply bg-bgAlt text-[14px];
-}
-
 .text__idNumber {
   @apply text-[12px] text-muted;
+}
+
+/* Icons */
+
+.icon {
+  @apply fill-current text-primary;
 }
 
 /* Button */
@@ -87,4 +81,22 @@ body {
 
 .navbar__badge {
   @apply aspect-video w-5 md:w-7 rounded-full bg-red-600 md:px-2 py-1 text-center text-white text-[8px] md:text-[12px] font-medium;
-} 
+}
+
+/* Table */
+
+thead th {
+  @apply bg-primary border border-border p-1 px-2 text-[14px] font-medium text-white text-center md:text-left;
+}
+
+tbody tr {
+  @apply odd:bg-bgMain even:bg-bgAlt hover:bg-secondary;
+}
+
+tbody td {
+  @apply p-2 text-[14px] border border-border;
+}
+
+tbody td.table__quickAction {
+  @apply w-10 p-0 text-center;
+}
