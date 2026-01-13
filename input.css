@@ -74,17 +74,17 @@ body {
 /* Navbar */
 
 .navbar__item {
-  @apply flex gap-0.5 md:gap-2 items-center text-2xl font-bold text-primaryText;
+  @apply flex px-2 py-1 pl-7 rounded-lg gap-1 md:gap-2 items-center text-lg font-medium text-secondary hover:outline;
 }
 
 .navbar__item:hover {
-  @apply text-primary;
+  @apply text-primaryText;
 }
 
 .navbar__item--active {
-  @apply text-primary;
+  @apply bg-secondary text-secondaryText;
 }
 
 .navbar__badge {
-  @apply aspect-video w-5 md:w-6 rounded-full bg-red-600 md:px-2 py-1 text-center text-white text-[10px] md:text-[12px] font-medium;
+  @apply aspect-video w-5 md:w-7 rounded-full bg-red-600 md:px-2 py-1 text-center text-white text-[8px] md:text-[12px] font-medium;
 } 
