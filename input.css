@@ -73,6 +73,14 @@ body {
   @apply object-cover flex-shrink-0 aspect-square border border-border rounded-full;
 }
 
+.pagination__item {
+  @apply text-primaryText hover:text-primary hover:cursor-pointer;
+}
+
+.pagination__item--active {
+  @apply text-primary;
+}
+
 /* Navbar */
 
 .navbar__item {
