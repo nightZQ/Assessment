@@ -41,12 +41,6 @@ body {
   @apply text-[12px] text-muted;
 }
 
-/* Icons */
-
-.icon {
-  @apply fill-current text-primary;
-}
-
 /* Button */
 
 .button__primary {
@@ -65,10 +59,24 @@ body {
   @apply text-primary;
 }
 
+/* Other */
+
+.icon {
+  @apply fill-current text-primary;
+}
+
+.icon__flag {
+  @apply md:aspect-square md:w-7;
+}
+
+.avatar {
+  @apply object-cover flex-shrink-0 aspect-square border border-border rounded-full;
+}
+
 /* Navbar */
 
 .navbar__item {
-  @apply flex px-2 py-1 pl-7 rounded-lg gap-1 md:gap-2 items-center text-lg font-medium text-secondary hover:outline;
+  @apply flex px-2 pl-6 py-1 rounded-lg gap-0.5 md:gap-2 items-center text-lg font-medium text-secondary hover:outline;
 }
 
 .navbar__item:hover {
@@ -86,7 +94,7 @@ body {
 /* Table */
 
 thead th {
-  @apply bg-primary border border-border p-1 px-2 text-[14px] font-medium text-white text-center md:text-left;
+  @apply bg-primary border border-border p-1 md:px-2 text-[14px] font-medium text-white text-center md:text-left;
 }
 
 tbody tr {
@@ -94,9 +102,17 @@ tbody tr {
 }
 
 tbody td {
-  @apply p-2 text-[14px] border border-border;
+  @apply p-1 md:p-2 text-[14px] text-balance border border-border;
 }
 
 tbody td.table__quickAction {
-  @apply w-10 p-0 text-center;
+  @apply p-0 text-center align-middle;
+}
+
+.table__patient {
+  @apply flex items-center gap-2;
+}
+
+.table__nationality {
+  @apply flex items-center gap-1;
 }
