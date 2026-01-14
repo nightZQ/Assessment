@@ -43,18 +43,18 @@ const patients = {
         remark: 'Routine check-up completed. Allergies: Aspirin'
     },
     '114': {
-        patient: 'Maria Garcia',
-        contact: '+34 91 123 4567',
-        nationality: 'fi fi-es',
-        nationalityName: 'Spanish',
-        email: 'maria.garcia@example.com',
-        birthdate: '10 Mar 1992',
-        age: '(33 yrs.)',
-        nric: 'ES987654D',
-        occupation: 'Teacher',
-        lastVisit: '05 Jan 2026 03:15 PM',
-        visitDuration: '(50 min)',
-        remark: 'Prescribed new medication for allergies. No known drug allergies.'
+        // patient: 'Maria Garcia',
+        // contact: '+34 91 123 4567',
+        // nationality: 'fi fi-es',
+        // nationalityName: 'Spanish',
+        // email: 'maria.garcia@example.com',
+        // birthdate: '10 Mar 1992',
+        // age: '(33 yrs.)',
+        // nric: 'ES987654D',
+        // occupation: 'Teacher',
+        // lastVisit: '05 Jan 2026 03:15 PM',
+        // visitDuration: '(50 min)',
+        // remark: 'Prescribed new medication for allergies. No known drug allergies.'
     },
     '115': {
         patient: 'Li Wei',
@@ -69,28 +69,50 @@ const patients = {
         lastVisit: '03 Jan 2026 01:45 PM',
         visitDuration: '(35 min)',
         remark: 'Lab results reviewed, all normal. Allergies: Sulfonamides'
-    }
+    },
 };
 
 const PatientPanel = (() => {
+    const overlay = document.getElementById('patient-overlay');
     const panel = document.getElementById('patient-panel');
 
-    const createPanel = (patientID) => {
-        const data = patients[patientID];
-        if (!data)
+    const checkingID = (patientID) => {
+        const error = {
+          "keyNotFound": "Error: Fail to fetch! Patient ID not found.",
+          "dataMissing": "Error: Data missing for this patient."
+        };
+        let status = true;
+
+        if (!(patientID in patients))
+            status = "keyNotFound";
+        else
         {
-            console.error('No data found for patient ID:', patientID);
+            const data = patients[patientID];
+            if (!data || Object.keys(data).length === 0)
+                status = "dataMissing";
+        }
+        if (status !== true) {
+            console.error(error[status]);
             panel.innerHTML = `
                 <button id="patient-close" class="button__secondary aspect-square rounded-full p-1">
                     <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
                 </button>
-    			<div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 text-center">
-                    <p class="text-white mt-4">Data Error! Patient id not found.</p>
+                <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 text-center text-white">
+                    <p class="mt-4">${error[status]}</p>
+                    <p>Patient ID: ${patientID}</p>
                 </div>
             `;
-            return;
+            buttonClose();
+            return false;
         }
+        return true;
+    };
 
+    const createPanel = (patientID) => {
+        if (!checkingID(patientID))
+            return;
+
+        const data = patients[patientID];
         panel.innerHTML = `
             <button id="patient-close" class="button__secondary aspect-square rounded-full p-1">
                 <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
@@ -147,16 +169,28 @@ const PatientPanel = (() => {
             </div>
         `;
 
+        buttonClose();
+    }
+
+    const buttonClose = () => {
         document.getElementById('patient-close').addEventListener('click', closePanel);
     }
 
     const openPanel = (patientID) => {
         createPanel(patientID);
-        panel.classList.remove('hidden');
+        overlay.classList.remove('hidden');
+        panel.offsetHeight;
+        panel.classList.add('transition-all', 'duration-300');
+        panel.classList.remove('translate-x-full');
     }
 
     const closePanel = () => {
-        panel.classList.add('hidden');
+        panel.classList.add('translate-x-full');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            panel.innerHTML = '';
+            panel.classList.remove('transition-all', 'duration-300');
+        }, 400);
     }
     
     return { openPanel, closePanel };
