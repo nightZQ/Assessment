@@ -41,6 +41,14 @@ body {
   @apply text-[12px] text-muted;
 }
 
+.text__panelTitle {
+  @apply text-[24px] font-bold text-white;
+}
+
+.text__panelContent {
+  @apply text-[14px] text-secondary;
+}
+
 /* Button */
 
 .button__primary {
@@ -62,7 +70,11 @@ body {
 /* Other */
 
 .icon {
-  @apply fill-current text-primary;
+  @apply flex-shrink-0 fill-current text-primary;
+}
+
+.icon--light {
+  @apply flex-shrink-0 fill-current text-secondary;
 }
 
 .icon__flag {
@@ -123,4 +135,22 @@ tbody td.table__quickAction {
 
 .table__nationality {
   @apply flex items-center gap-1;
+}
+
+/* Patient Panel */
+
+#patient-panel h1 {
+  @apply text-[24px] font-bold text-white;
+}
+
+#patient-panel h2 {
+  @apply text-[16px] font-bold text-white mb-2;
+}
+
+#patient-panel dt {
+  @apply text-[14px] flex-shrink-0 font-medium text-gray-300 ml-2;
+}
+
+#patient-panel dd, #patient-panel span {
+  @apply text-[14px] text-secondary;
 }
