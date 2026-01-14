@@ -154,3 +154,15 @@ tbody td.table__quickAction {
 #patient-panel dd, #patient-panel span {
   @apply text-[14px] text-secondary;
 }
+
+.patient__section {
+  @apply flex flex-col mt-4;
+}
+
+.patient__data {
+  @apply flex gap-2 items-center;
+}
+
+.patient__data--remarkBox {
+  @apply border mx-3 p-1 text-pretty md:text-balance;
+}
