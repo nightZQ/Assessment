@@ -1,21 +1,19 @@
-// Navbar tablet view: toggle on/off
-const navbar = document.getElementById('navbar');
-const hamburger = document.getElementById('hamburger-nav');
-const iconMenu = document.getElementById('nav-menu');
-const iconClose = document.getElementById('nav-close');
-hamburger.addEventListener('click', () => {
-	const isNavHidden = navbar.classList.contains('md:hidden');;
-	navbar.classList.toggle('md:hidden');
-	navbar.classList.toggle('md:flex');
-	iconMenu.classList.toggle('hidden', isNavHidden);
-	iconClose.classList.toggle('hidden', !isNavHidden);
-});
-
-// Patient panel
-
+const NavSidebar = (() => {
+    const navbar = document.getElementById('navbar');
+    const hamburger = document.getElementById('hamburger-nav');
+    const iconMenu = document.getElementById('nav-menu');
+    const iconClose = document.getElementById('nav-close');
+    hamburger.addEventListener('click', () => {
+        const isNavHidden = navbar.classList.contains('md:hidden');;
+        navbar.classList.toggle('md:hidden');
+        navbar.classList.toggle('md:flex');
+        iconMenu.classList.toggle('hidden', isNavHidden);
+        iconClose.classList.toggle('hidden', !isNavHidden);
+    });
+})();
 
 // Patient Data
-const patientDatabase = {
+const patients = {
     '112': {
         patient: 'John Doe',
         contact: '+1 234 567 8901',
@@ -26,7 +24,6 @@ const patientDatabase = {
         age: '(36 yrs.)',
         nric: 'A1234567B',
         occupation: 'Software Engineer',
-        allergies: 'Penicillin, Shellfish',
         lastVisit: '10 Jan 2026 02:30 PM',
         visitDuration: '(45 min)',
         remark: 'Follow-up on hypertension management. Allergies: Penicillin, Shellfish'
@@ -41,7 +38,6 @@ const patientDatabase = {
 			age: '37',
         nric: 'BP123456C',
         occupation: 'Marketing Manager',
-        allergies: 'Aspirin',
         lastVisit: '08 Jan 2026 10:00 AM',
         visitDuration: '(30 min)',
         remark: 'Routine check-up completed. Allergies: Aspirin'
@@ -56,7 +52,6 @@ const patientDatabase = {
         age: '(33 yrs.)',
         nric: 'ES987654D',
         occupation: 'Teacher',
-        allergies: 'None',
         lastVisit: '05 Jan 2026 03:15 PM',
         visitDuration: '(50 min)',
         remark: 'Prescribed new medication for allergies. No known drug allergies.'
@@ -71,9 +66,115 @@ const patientDatabase = {
         age: '(40 yrs.)',
         nric: 'CN456789E',
         occupation: 'Accountant',
-        allergies: 'Sulfonamides',
         lastVisit: '03 Jan 2026 01:45 PM',
         visitDuration: '(35 min)',
         remark: 'Lab results reviewed, all normal. Allergies: Sulfonamides'
     }
 };
+
+const PatientPanel = (() => {
+    const panel = document.getElementById('patient-panel');
+
+    const createPanel = (patientID) => {
+        const data = patients[patientID];
+        if (!data)
+        {
+            console.error('No data found for patient ID:', patientID);
+            panel.innerHTML = `
+                <button id="patient-close" class="button__secondary aspect-square rounded-full p-1">
+                    <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
+                </button>
+    			<div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 text-center">
+                    <p class="text-white mt-4">Data Error! Patient id not found.</p>
+                </div>
+            `;
+            return;
+        }
+
+        panel.innerHTML = `
+            <button id="patient-close" class="button__secondary aspect-square rounded-full p-1">
+                <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
+            </button>
+            <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4">
+                <span class="flex gap-2 mt-2">
+                    <h1>${data.patient}</h1>
+                    <span class="${data.nationality}"></span>
+                </span>
+                <div class="flex flex-col ml-4">
+                    <p class="patient__data">
+                        <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M19.95 21q-3.125 0-6.187-1.35T8.2 15.8t-3.85-5.55T3 4.05V3h5.9l.925 5.025l-2.85 2.875q.55.975 1.225 1.85t1.45 1.625q.725.725 1.588 1.388T13.1 17l2.9-2.9l5 1.025V21z"/></svg>
+                        <span>${data.contact}</span>
+                    </p>
+                    <p class="patient__data">
+                        <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zM20 8l-7.475 4.675q-.125.075-.262.113t-.263.037t-.262-.037t-.263-.113L4 8v10h16zm-8 3l8-5H4zM4 8v.25v-1.475v.025V6v.8v-.012V8.25zv10z"/></svg>
+                        <span>${data.email}</span>
+                    </p>
+                    <p class="patient__data">
+                        <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><!-- Icon from IconPark Outline by ByteDance - https://github.com/bytedance/IconPark/blob/master/LICENSE --><g fill="none"><path d="M8 40h32V24H8z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M40 40H8m32 0H4h4m32 0h4m-4 0V24H8v16"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="m40 34l-4-2l-4 2l-4-2l-4 2l-4-2l-4 2l-4-2l-4 2m24-10v-9m-8 9v-9m-8 9v-9m16-5V8m-8 2V8m-8 2V8M8 24v16m32-16v16"/></g></svg>
+                        <span>${data.birthdate} ${data.age}</span>
+                    </p>
+                </div>
+                <div class="patient__section">
+                    <h2>Personal Details</h2>
+                    <dl>
+                        <div class="patient__data">
+                            <dt>Nationality</dt>
+                            <dd>${data.nationalityName}</dd>
+                        </div>
+                        <div class="patient__data">
+                            <dt>NRIC/Passport</dt>
+                            <dd>${data.nric}</dd>
+                        </div>
+                        <div class="patient__data">
+                            <dt>Occupation</dt>
+                            <dd>${data.occupation}</dd>
+                        </div>
+                    </dl>
+                </div>
+                <div class="patient__section">
+                    <h2>Medical Notes</h2>
+                    <dl>
+                        <div class="patient__data">
+                            <dt>Last Visit</dt>
+                            <dd>${data.lastVisit} ${data.visitDuration}</dd>
+                        </div>
+                        <div class="flex flex-col">
+                            <dt>Remark</dt>
+                            <dd class="patient__data--remarkBox">${data.remark}</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('patient-close').addEventListener('click', closePanel);
+    }
+
+    const openPanel = (patientID) => {
+        createPanel(patientID);
+        panel.classList.remove('hidden');
+    }
+
+    const closePanel = () => {
+        panel.classList.add('hidden');
+    }
+    
+    return { openPanel, closePanel };
+})();
+
+const PatientTable = (() => {
+    const init = () => {
+        document.querySelectorAll('#patient-table tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                const patientID = row.getAttribute('data-patient-id');
+                PatientPanel.openPanel(patientID);
+            });
+        });
+    }
+
+    return { init };
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  PatientTable.init();
+});

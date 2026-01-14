@@ -67,9 +67,21 @@ body {
   @apply text-primary;
 }
 
-/* Other */
+/* Icon */
 
 .icon {
+  @apply aspect-square w-6;
+}
+
+.icon--sm {
+ @apply aspect-square w-4;
+}
+
+.icon--lg {
+  @apply aspect-square w-8;
+}
+
+.icon--dark {
   @apply flex-shrink-0 fill-current text-primary;
 }
 
@@ -80,6 +92,8 @@ body {
 .icon__flag {
   @apply md:aspect-square md:w-7;
 }
+
+/* Other */
 
 .avatar {
   @apply object-cover flex-shrink-0 aspect-square border border-border rounded-full;
