@@ -87,6 +87,18 @@ const PatientPanel = (() => {
     let btn_close = null;
     let trapHandler = null;
 
+    const CloseButton = `
+        <button id="patient-close" aria-label="Close patient panel" class="button__secondary button__icon !bg-white/60 aspect-square w-fit rounded-2xl p-1">
+            <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
+        </button>
+    `;
+
+    const addClose = () => {
+        btn_close = document.getElementById('patient-close');
+        btn_close.removeEventListener('click', closePanel);
+        btn_close.addEventListener('click', closePanel);
+    }
+
     const checkingID = (patientID) => {
         const error = {
           "keyNotFound": "Error: Fail to fetch! Patient ID not found.",
@@ -105,9 +117,7 @@ const PatientPanel = (() => {
         if (status !== true) {
             console.error(error[status]);
             panel.innerHTML = `
-                <button id="patient-close" aria-label="Close patient panel" class="button__secondary button__icon !bg-white/60 aspect-square w-fit rounded-2xl p-1">
-                    <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
-                </button>
+                ${CloseButton}
                 <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 text-center text-white">
                     <p class="mt-4">${error[status]}</p>
                     <p>Patient ID: ${patientID}</p>
@@ -125,9 +135,7 @@ const PatientPanel = (() => {
 
         const data = patients[patientID];
         panel.innerHTML = `
-            <button id="patient-close" aria-label="Close patient panel" class="button__secondary button__icon !bg-white/60 aspect-square w-fit rounded-2xl p-1">
-                <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
-            </button>
+            ${CloseButton}
             <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto">
                 <span class="flex gap-2 mt-2">
                     <h1>${data.patient}</h1>
@@ -179,13 +187,6 @@ const PatientPanel = (() => {
                 </div>
             </div>
         `;
-
-        addClose();
-    }
-
-    const addClose = () => {
-        btn_close = document.getElementById('patient-close');
-        btn_close.addEventListener('click', closePanel);
     }
 
     const handleTab = (e) => {
@@ -196,12 +197,33 @@ const PatientPanel = (() => {
     }
 
     const openPanel = (patientID) => {
-        createPanel(patientID);
         overlay.classList.remove('hidden');
-        panel.offsetHeight;
+        panel.offsetHeight; 
         panel.classList.add('transition-all', 'duration-300');
         panel.classList.remove('translate-x-full');
-        btn_close.focus();
+        panel.innerHTML = `
+            ${CloseButton}
+            <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto flex items-center justify-center">
+                <svg class="w-6 h-6 text-white animate-spin" viewBox="0 0 64 64" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <path
+                        d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z"
+                        stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path
+                        d="M32 3C36.5778 3 41.0906 4.08374 45.1692 6.16256C49.2477 8.24138 52.7762 11.2562 55.466 14.9605C58.1558 18.6647 59.9304 22.9531 60.6448 27.4748C61.3591 31.9965 60.9928 36.6232 59.5759 40.9762"
+                        stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" class="text-primary/50">
+                    </path>
+                </svg>
+            <span class="sr-only">Loading...</span>
+            </div>
+        `;
+        addClose();
+
+        setTimeout(() => {
+            createPanel(patientID);
+            addClose();
+        }, 500);
+
         trapHandler = handleTab;
         document.addEventListener('keydown', trapHandler);
     }
@@ -222,7 +244,7 @@ const PatientPanel = (() => {
             closePanel();
         }
     });
-    
+
     return { openPanel, closePanel };
 })();
 

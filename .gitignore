@@ -8,3 +8,4 @@ build/
 coverage/
 *.local
 npm-debug.log
+output.css
