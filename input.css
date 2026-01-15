@@ -52,19 +52,19 @@ body {
 /* Button */
 
 .button__primary {
-  @apply bg-primary rounded-full text-white;
+  @apply bg-primary rounded-full text-white cursor-pointer;
+}
+
+.button__primary:hover, .button__primary:active, .button__primary:focus {
+  @apply opacity-80;
 }
 
 .button__secondary {
-  @apply bg-white rounded-full border border-primary border-2 text-primary;
+  @apply bg-white border border-primary border-2 text-primary cursor-pointer;
 }
 
-.button__icon {
-  @apply text-gray-500 p-2;
-}
-
-.button__icon:hover {
-  @apply text-primary;
+.button__secondary:active, .button__secondary:focus, .button__icon:hover {
+  @apply text-gray-500 !border-gray-500;
 }
 
 /* Icon */
@@ -95,12 +95,20 @@ body {
 
 /* Other */
 
+:focus {
+  @apply outline outline-2 outline-offset-2 outline-primary;
+}
+
 .avatar {
   @apply object-cover flex-shrink-0 aspect-square border border-border rounded-full;
 }
 
 .pagination__item {
-  @apply text-primaryText hover:text-primary hover:cursor-pointer;
+  @apply text-primaryText p-1 md:px-2 md:py-1 ;
+}
+
+.pagination__item:hover, .pagination__item:active, .pagination__item:focus {
+  @apply text-primary cursor-pointer;
 }
 
 .pagination__item--active {
@@ -113,8 +121,12 @@ body {
   @apply flex px-2 pl-6 py-1 rounded-lg gap-0.5 md:gap-2 items-center text-lg font-medium text-secondary hover:outline;
 }
 
-.navbar__item:hover {
+.navbar__item:hover, .navbar__item:active {
   @apply text-primaryText;
+}
+
+.navbar__item:focus {
+  @apply outline outline-2 outline-offset-2 outline-secondary;  
 }
 
 .navbar__item--active {
@@ -132,15 +144,15 @@ thead th {
 }
 
 tbody tr {
-  @apply odd:bg-bgMain even:bg-bgAlt hover:bg-secondary;
+  @apply odd:bg-bgMain even:bg-bgAlt transition-colors duration-150 hover:bg-secondary active:bg-secondary focus:bg-secondary;
 }
 
 tbody td {
   @apply p-1 md:p-2 text-[14px] text-balance border border-border;
 }
 
-tbody td.table__quickAction {
-  @apply p-0 text-center align-middle;
+tbody td:last-child {
+  @apply text-center;
 }
 
 .table__patient {
@@ -149,6 +161,10 @@ tbody td.table__quickAction {
 
 .table__nationality {
   @apply flex items-center gap-1;
+}
+
+.table__action {
+  @apply button__icon text-primary align-middle cursor-pointer;
 }
 
 /* Patient Panel */
@@ -174,9 +190,9 @@ tbody td.table__quickAction {
 }
 
 .patient__data {
-  @apply flex gap-2 items-center;
+  @apply flex gap-2 items-start md:items-center;
 }
 
-.patient__data--remarkBox {
-  @apply border mx-3 p-1 text-pretty md:text-balance;
+.patient__data--remarkBox { 
+  @apply border mx-3 p-1 text-pretty md:text-balance wrap-anywhere md:wrap-break-word;
 }
