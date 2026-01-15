@@ -63,7 +63,11 @@ body {
   @apply bg-white border border-primary border-2 text-primary cursor-pointer;
 }
 
-.button__secondary:active, .button__secondary:focus, .button__icon:hover {
+.button__icon {
+  @apply cursor-pointer transition-colors;
+}
+
+.button__icon:active, .button__icon:focus, .button__icon:hover {
   @apply text-gray-500 !border-gray-500;
 }
 
@@ -95,7 +99,7 @@ body {
 
 /* Other */
 
-:focus {
+:focus-visible {
   @apply outline outline-2 outline-offset-2 outline-primary;
 }
 
@@ -147,6 +151,10 @@ tbody tr {
   @apply odd:bg-bgMain even:bg-bgAlt transition-colors duration-150 hover:bg-secondary active:bg-secondary focus:bg-secondary;
 }
 
+tbody tr:focus-visible {
+  @apply outline-offset-[-2px];
+}
+
 tbody td {
   @apply p-1 md:p-2 text-[14px] text-balance border border-border;
 }
@@ -164,7 +172,7 @@ tbody td:last-child {
 }
 
 .table__action {
-  @apply button__icon text-primary align-middle cursor-pointer;
+  @apply text-primary hover:text-gray-500 align-middle cursor-pointer;
 }
 
 /* Patient Panel */

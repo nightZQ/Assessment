@@ -31,7 +31,8 @@ const patients = {
         occupation: 'Software Engineer',
         lastVisit: '10 Jan 2026 02:30PM',
         visitDuration: '(45 min)',
-        remark: 'Follow-up on hypertension management. Allergies: Penicillin, Shellfish. THis is aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa long text'
+        remark: 'Follow-up on hypertension management. Allergies: Penicillin, Shellfish. THis is aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa long text',
+        vip: false
     },
     '113': {
         patient: 'Jane Smith',
@@ -45,7 +46,8 @@ const patients = {
         occupation: 'Marketing Manager',
         lastVisit: '08 Jan 2026 10:00AM',
         visitDuration: '(30 min)',
-        remark: 'Routine check-up completed. Allergies: Aspirin'
+        remark: 'Routine check-up completed. Allergies: Aspirin',
+        vip: true
     },
     '114': {
         // patient: 'Maria Garcia',
@@ -59,7 +61,8 @@ const patients = {
         // occupation: 'Teacher',
         // lastVisit: '05 Jan 2026 03:15PM',
         // visitDuration: '(50 min)',
-        // remark: 'Prescribed new medication for allergies. No known drug allergies.'
+        // remark: 'Prescribed new medication for allergies. No known drug allergies.',
+        // vip: false
     },
     '115': {
         patient: 'Li Wei',
@@ -73,13 +76,16 @@ const patients = {
         occupation: 'Accountant',
         lastVisit: '03 Jan 2026 01:45PM',
         visitDuration: '(35 min)',
-        remark: 'Lab results reviewed, all normal. Allergies: Sulfonamides'
+        remark: 'Lab results reviewed, all normal. Allergies: Sulfonamides',
+        vip: false
     },
 };
 
 const PatientPanel = (() => {
     const overlay = document.getElementById('patient-overlay');
     const panel = document.getElementById('patient-panel');
+    let btn_close = null;
+    let trapHandler = null;
 
     const checkingID = (patientID) => {
         const error = {
@@ -99,7 +105,7 @@ const PatientPanel = (() => {
         if (status !== true) {
             console.error(error[status]);
             panel.innerHTML = `
-                <button id="patient-close" aria-label="Close patient panel" class="button__secondary !bg-white/60 aspect-square w-fit rounded-2xl p-1">
+                <button id="patient-close" aria-label="Close patient panel" class="button__secondary button__icon !bg-white/60 aspect-square w-fit rounded-2xl p-1">
                     <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
                 </button>
                 <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 text-center text-white">
@@ -107,7 +113,7 @@ const PatientPanel = (() => {
                     <p>Patient ID: ${patientID}</p>
                 </div>
             `;
-            buttonClose();
+            addClose();
             return false;
         }
         return true;
@@ -119,7 +125,7 @@ const PatientPanel = (() => {
 
         const data = patients[patientID];
         panel.innerHTML = `
-            <button id="patient-close" aria-label="Close patient panel" class="button__secondary !bg-white/60 aspect-square w-fit rounded-2xl p-1">
+            <button id="patient-close" aria-label="Close patient panel" class="button__secondary button__icon !bg-white/60 aspect-square w-fit rounded-2xl p-1">
                 <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
             </button>
             <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto">
@@ -174,11 +180,19 @@ const PatientPanel = (() => {
             </div>
         `;
 
-        buttonClose();
+        addClose();
     }
 
-    const buttonClose = () => {
-        document.getElementById('patient-close').addEventListener('click', closePanel);
+    const addClose = () => {
+        btn_close = document.getElementById('patient-close');
+        btn_close.addEventListener('click', closePanel);
+    }
+
+    const handleTab = (e) => {
+        if (e.key !== 'Tab' || overlay.classList.contains('hidden'))
+            return ;
+        e.preventDefault();
+        btn_close.focus();
     }
 
     const openPanel = (patientID) => {
@@ -187,12 +201,14 @@ const PatientPanel = (() => {
         panel.offsetHeight;
         panel.classList.add('transition-all', 'duration-300');
         panel.classList.remove('translate-x-full');
-
-        const closeButton = document.getElementById('patient-close');
-        closeButton.focus();
+        btn_close.focus();
+        trapHandler = handleTab;
+        document.addEventListener('keydown', trapHandler);
     }
 
     const closePanel = () => {
+        if (trapHandler)
+            document.removeEventListener('keydown', trapHandler);
         panel.classList.add('translate-x-full');
         setTimeout(() => {
             overlay.classList.add('hidden');
