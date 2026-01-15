@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+output.css
+*.log
+.env
+.DS_Store
+.vscode/
+coverage/
+*.local
+npm-debug.log

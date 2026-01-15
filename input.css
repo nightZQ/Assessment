@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-family-inter: "Inter", sans-serif;
+  
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+  
+  --color-primary: #0052CC;
+  --color-secondary: #E8F0FE;
+  --color-primaryText: #333333;
+  --color-secondaryText: #666666;
+  --color-border: #E5E5E5;
+  --color-bgMain: #FFFFFF;
+  --color-bgAlt: #F8F9FA;
+  --color-success: #36B37E;
+  --color-vip: #FFD700;
+  --color-muted: #9EA6B3;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background-main);
+  font-family: var(--font-family-inter);
+}
+
+/* Typography */
+
+.text__title {
+  @apply text-[24px] font-bold text-primaryText;
+}
+
+.text__subtitle {
+  @apply text-[14px] text-secondaryText;
+}
+
+.text__idNumber {
+  @apply text-[12px] text-muted;
+}
+
+.text__panelTitle {
+  @apply text-[24px] font-bold text-white;
+}
+
+.text__panelContent {
+  @apply text-[14px] text-secondary;
+}
+
+/* Button */
+
+.button__primary {
+  @apply bg-primary rounded-full text-white cursor-pointer;
+}
+
+.button__primary:hover, .button__primary:active, .button__primary:focus {
+  @apply opacity-80;
+}
+
+.button__secondary {
+  @apply bg-white border border-primary border-2 text-primary cursor-pointer;
+}
+
+.button__icon {
+  @apply cursor-pointer transition-colors;
+}
+
+.button__icon:active, .button__icon:focus, .button__icon:hover {
+  @apply text-gray-500 !border-gray-500;
+}
+
+/* Icon */
+
+.icon {
+  @apply aspect-square w-6;
+}
+
+.icon--sm {
+ @apply aspect-square w-4;
+}
+
+.icon--lg {
+  @apply aspect-square w-8;
+}
+
+.icon--dark {
+  @apply flex-shrink-0 fill-current text-primary;
+}
+
+.icon--light {
+  @apply flex-shrink-0 fill-current text-secondary;
+}
+
+.icon__flag {
+  @apply md:aspect-square md:w-7;
+}
+
+/* Other */
+
+:focus-visible {
+  @apply outline outline-2 outline-offset-2 outline-primary;
+}
+
+.avatar {
+  @apply object-cover flex-shrink-0 aspect-square border border-border rounded-full;
+}
+
+.pagination__item {
+  @apply text-primaryText p-1 md:px-2 md:py-1 ;
+}
+
+.pagination__item:hover, .pagination__item:active, .pagination__item:focus {
+  @apply text-primary cursor-pointer;
+}
+
+.pagination__item--active {
+  @apply text-primary;
+}
+
+/* Navbar */
+
+.navbar__item {
+  @apply flex px-2 pl-6 py-1 rounded-lg gap-0.5 md:gap-2 items-center text-lg font-medium text-secondary hover:outline;
+}
+
+.navbar__item:hover, .navbar__item:active {
+  @apply text-primaryText;
+}
+
+.navbar__item:focus {
+  @apply outline outline-2 outline-offset-2 outline-secondary;  
+}
+
+.navbar__item--active {
+  @apply bg-secondary text-secondaryText;
+}
+
+.navbar__badge {
+  @apply aspect-video w-5 md:w-7 rounded-full bg-red-600 md:px-2 py-1 text-center text-white text-[8px] md:text-[12px] font-medium;
+}
+
+/* Table */
+
+thead th {
+  @apply bg-primary border border-border p-1 md:px-2 text-[14px] font-medium text-white text-center md:text-left;
+}
+
+tbody tr {
+  @apply odd:bg-bgMain even:bg-bgAlt transition-colors duration-150 hover:bg-secondary active:bg-secondary focus:bg-secondary;
+}
+
+tbody tr:focus-visible {
+  @apply outline-offset-[-2px];
+}
+
+tbody td {
+  @apply p-1 md:p-2 text-[14px] text-balance border border-border;
+}
+
+tbody td:last-child {
+  @apply text-center;
+}
+
+.table__patient {
+  @apply flex items-center gap-2;
+}
+
+.table__nationality {
+  @apply flex items-center gap-1;
+}
+
+.table__action {
+  @apply text-primary hover:text-gray-500 align-middle cursor-pointer;
+}
+
+/* Patient Panel */
+
+#patient-panel h1 {
+  @apply text-[24px] font-bold text-white;
+}
+
+#patient-panel h2 {
+  @apply text-[16px] font-bold text-white mb-2;
+}
+
+#patient-panel dt {
+  @apply text-[14px] flex-shrink-0 font-medium text-gray-300 ml-2;
+}
+
+#patient-panel dd, #patient-panel span {
+  @apply text-[14px] text-secondary;
+}
+
+.patient__section {
+  @apply flex flex-col mt-4;
+}
+
+.patient__data {
+  @apply flex gap-2 items-start md:items-center;
+}
+
+.patient__data--remarkBox { 
+  @apply border mx-3 p-1 text-pretty md:text-balance wrap-anywhere md:wrap-break-word;
+}
