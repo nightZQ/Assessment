@@ -334,9 +334,21 @@ const togglePatientPanel = (() => {
 
 const UpcomingAppointments = (() => {
     const statusIcons = {
-        StatusPending: `<svg class="icon--sm fill-current text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2M12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8m-.22-13h-.06c-.4 0-.72.32-.72.72v4.72c0 .35.18.68.49.86l4.15 2.49c.34.2.78.1.98-.24a.71.71 0 0 0-.25-.99l-3.87-2.3V7.72c0-.4-.32-.72-.72-.72"/></svg>`,
-        StatusScheduled:`<svg class="icon--sm fill-current text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M5 22q-.825 0-1.412-.587T3 20V6q0-.825.588-1.412T5 4h1V3q0-.425.288-.712T7 2t.713.288T8 3v1h8V3q0-.425.288-.712T17 2t.713.288T18 3v1h1q.825 0 1.413.588T21 6v6.375q0 .425-.288.713t-.712.287t-.712-.288t-.288-.712V10H5v10h6.225q.425 0 .7.288T12.2 21t-.287.713T11.2 22zM5 8h14V6H5zm0 0V6zm11.525 11.675l3.55-3.55q.3-.3.7-.3t.7.3t.3.713t-.3.712L17.25 21.8q-.3.3-.712.3t-.713-.3L13.7 19.675q-.3-.3-.3-.712t.3-.713t.713-.3t.712.3z"/></svg>`,
-        StatusCompleted: `<svg class="icon--sm text-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from NRK Core Icons by Norsk rikskringkasting - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12"/><path d="m17.608 9l-7.726 7.726L6 12.093l1.511-1.31l2.476 3.01l6.207-6.207z"/></g></svg>`,
+        StatusPending: `
+            <span aria-label="Appointment Pending" class="sr-only">Appointment Pending</span>
+                <svg aria-hidden="true" class="icon--sm fill-current text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2M12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8m-.22-13h-.06c-.4 0-.72.32-.72.72v4.72c0 .35.18.68.49.86l4.15 2.49c.34.2.78.1.98-.24a.71.71 0 0 0-.25-.99l-3.87-2.3V7.72c0-.4-.32-.72-.72-.72"/></svg>
+            </span>
+        `,
+        StatusScheduled:`
+            <span aria-label="Appointment Scheduled" class="sr-only">Appointment Scheduled</span>
+                <svg class="icon--sm fill-current text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M5 22q-.825 0-1.412-.587T3 20V6q0-.825.588-1.412T5 4h1V3q0-.425.288-.712T7 2t.713.288T8 3v1h8V3q0-.425.288-.712T17 2t.713.288T18 3v1h1q.825 0 1.413.588T21 6v6.375q0 .425-.288.713t-.712.287t-.712-.288t-.288-.712V10H5v10h6.225q.425 0 .7.288T12.2 21t-.287.713T11.2 22zM5 8h14V6H5zm0 0V6zm11.525 11.675l3.55-3.55q.3-.3.7-.3t.7.3t.3.713t-.3.712L17.25 21.8q-.3.3-.712.3t-.713-.3L13.7 19.675q-.3-.3-.3-.712t.3-.713t.713-.3t.712.3z"/></svg>
+            </span>
+        `,
+        StatusCompleted: `
+            <span aria-label="Appointment Completed" class="sr-only">Appointment Completed</span>
+                <svg class="icon--sm text-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from NRK Core Icons by Norsk rikskringkasting - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12"/><path d="m17.608 9l-7.726 7.726L6 12.093l1.511-1.31l2.476 3.01l6.207-6.207z"/></g></svg>
+            </span>
+        `,
         // StatusCancel: `<svg class="icon--sm fill-current text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from NRK Core Icons by Norsk rikskringkasting - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path fill-rule="evenodd" d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12" clip-rule="evenodd" opacity=".5"/><path d="m15.293 7.293l-8 8l1.414 1.414l8-8z"/><path d="m8.707 7.293l8 8l-1.414 1.414l-8-8z"/></g></svg>`,
     };
 
@@ -349,17 +361,18 @@ const UpcomingAppointments = (() => {
             const data = appointments[key];
             icon_status = getStatusIcon(data.status) || '';
             return `
-                <div role="dialog" aria-modal="true" tabindex="0" class="flex flex-col flex-shrink-0 bg-primary/90 rounded-3xl shadow-md/20 snap-start w-125 md:w-80 h-30 text-[14px] text-white">
-                    <p class="flex justify-between bg-bgAlt border border-secondaryText/50 rounded-t-3xl py-1 px-4 font-semibold text-primaryText">
-                        <span>${data.date} - ${data.time}</span>
+                <div role="dialog" tabindex="0" class="flex flex-col flex-shrink-0 bg-primary/90 rounded-3xl shadow-md/20 snap-start w-125 md:w-80 h-30 text-[14px] text-white">
+                    <div class="flex justify-between bg-bgAlt border border-secondaryText/50 rounded-t-3xl py-1 px-4 font-semibold text-primaryText">
+                        <span class="sr-only">Appointment date time</span>
+                        <span aria-label="appointment date and time">${data.date} - ${data.time}</span>
                         ${icon_status}
-                    </p>
+                    </div>
                     <div class="mt-1 ml-1 px-4 pb-2">
-                        <p>${data.treatmentType}</p>
+                        <p aria-label="treatment type">${data.treatmentType}</p>
                         <p class="flex gap-1 items-start">
                             <span class="sr-only">Doctor</span>
                             <svg class="icon--sm fill-current text-white" xmlnsF="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><!-- Icon from Maki by Mapbox - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M5.5 7A2.5 2.5 0 0 1 3 4.5v-2a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v2a3.49 3.49 0 0 0 1.51 2.87A4.4 4.4 0 0 1 5 10.5a3.5 3.5 0 1 0 7 0v-.57a2 2 0 1 0-1 0v.57a2.5 2.5 0 0 1-5 0a4.4 4.4 0 0 1 1.5-3.13A3.49 3.49 0 0 0 9 4.5v-2A1.5 1.5 0 0 0 7.5 1H7a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v2A2.5 2.5 0 0 1 5.5 7m6 2a1 1 0 1 1 0-2a1 1 0 0 1 0 2"/></svg>
-                            <span class="text-medium">${data.assignedDoctor}</span>
+                            <span aria-label="assigned doctor" class="text-medium">${data.assignedDoctor}</span>
                         </p>
                         <p class="flex gap-1 items-start line-clamp-2">
                             <span class="sr-only">Remark</span>
