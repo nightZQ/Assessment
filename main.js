@@ -41,7 +41,7 @@ const patients = {
         nationalityName: 'British',
         email: 'jane.smith@example.com',
         birthdate: '22 May 1988',
-			age: '37',
+        age: '(37 yrs.)',
         nric: 'BP123456C',
         occupation: 'Marketing Manager',
         lastVisit: '08 Jan 2026 10:00AM',
@@ -136,54 +136,59 @@ const PatientPanel = (() => {
         const data = patients[patientID];
         panel.innerHTML = `
             ${CloseButton}
-            <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto">
+            <div role="dialog" aria-modal="true" tabindex="-1" class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto">
                 <span class="flex gap-2 mt-2">
-                    <h1>${data.patient}</h1>
-                    <span class="${data.nationality}"></span>
+                    <h1 id="patient-name">${data.patient}</h1>
+                    <span aria-hidden="true" class="${data.nationality}"></span>
                 </span>
-                <div class="flex flex-col ml-4">
-                    <p class="patient__data">
-                        <svg title="Contact" class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M19.95 21q-3.125 0-6.187-1.35T8.2 15.8t-3.85-5.55T3 4.05V3h5.9l.925 5.025l-2.85 2.875q.55.975 1.225 1.85t1.45 1.625q.725.725 1.588 1.388T13.1 17l2.9-2.9l5 1.025V21z"/></svg>
-                        <span>${data.contact}</span>
-                    </p>
-                    <p class="patient__data">
-                        <svg title="Email" class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zM20 8l-7.475 4.675q-.125.075-.262.113t-.263.037t-.262-.037t-.263-.113L4 8v10h16zm-8 3l8-5H4zM4 8v.25v-1.475v.025V6v.8v-.012V8.25zv10z"/></svg>
-                        <span>${data.email}</span>
-                    </p>
-                    <p class="patient__data">
-                        <svg title="Date of birth" class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><!-- Icon from IconPark Outline by ByteDance - https://github.com/bytedance/IconPark/blob/master/LICENSE --><g fill="none"><path d="M8 40h32V24H8z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M40 40H8m32 0H4h4m32 0h4m-4 0V24H8v16"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="m40 34l-4-2l-4 2l-4-2l-4 2l-4-2l-4 2l-4-2l-4 2m24-10v-9m-8 9v-9m-8 9v-9m16-5V8m-8 2V8m-8 2V8M8 24v16m32-16v16"/></g></svg>
-                        <span>${data.birthdate} ${data.age}</span>
-                    </p>
-                </div>
-                <div class="patient__section">
-                    <h2>Personal Details</h2>
-                    <dl>
-                        <div class="patient__data">
-                            <dt>Nationality</dt>
-                            <dd>${data.nationalityName}</dd>
-                        </div>
-                        <div class="patient__data">
-                            <dt>NRIC/Passport</dt>
-                            <dd>${data.nric}</dd>
-                        </div>
-                        <div class="patient__data">
-                            <dt>Occupation</dt>
-                            <dd>${data.occupation}</dd>
-                        </div>
-                    </dl>
-                </div>
-                <div class="patient__section">
-                    <h2>Medical Notes</h2>
-                    <dl>
-                        <div class="patient__data">
-                            <dt>Last Visit</dt>
-                            <dd>${data.lastVisit} ${data.visitDuration}</dd>
-                        </div>
-                        <div class="flex flex-col">
-                            <dt>Remark</dt>
-                            <dd class="patient__data--remarkBox">${data.remark}</dd>
-                        </div>
-                    </dl>
+                <div id="patient-content">
+                    <section class="flex flex-col ml-4">
+                        <p class="patient__data">
+                            <span class="sr-only">Contact</span>
+                            <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M19.95 21q-3.125 0-6.187-1.35T8.2 15.8t-3.85-5.55T3 4.05V3h5.9l.925 5.025l-2.85 2.875q.55.975 1.225 1.85t1.45 1.625q.725.725 1.588 1.388T13.1 17l2.9-2.9l5 1.025V21z"/></svg>
+                            <span>${data.contact}</span>
+                        </p>
+                        <p class="patient__data">
+                            <span class="sr-only">Email</span>
+                            <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zM20 8l-7.475 4.675q-.125.075-.262.113t-.263.037t-.262-.037t-.263-.113L4 8v10h16zm-8 3l8-5H4zM4 8v.25v-1.475v.025V6v.8v-.012V8.25zv10z"/></svg>
+                            <span>${data.email}</span>
+                        </p>
+                        <p class="patient__data">
+                            <span class="sr-only">Date of birth</span>
+                            <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><!-- Icon from IconPark Outline by ByteDance - https://github.com/bytedance/IconPark/blob/master/LICENSE --><g fill="none"><path d="M8 40h32V24H8z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M40 40H8m32 0H4h4m32 0h4m-4 0V24H8v16"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="m40 34l-4-2l-4 2l-4-2l-4 2l-4-2l-4 2l-4-2l-4 2m24-10v-9m-8 9v-9m-8 9v-9m16-5V8m-8 2V8m-8 2V8M8 24v16m32-16v16"/></g></svg>
+                            <span>${data.birthdate} ${data.age}</span>
+                        </p>
+                    </section>
+                    <section class="patient__section">
+                        <h2>Personal Details</h2>
+                        <dl>
+                            <div class="patient__data">
+                                <dt>Nationality</dt>
+                                <dd>${data.nationalityName}</dd>
+                            </div>
+                            <div class="patient__data">
+                                <dt>NRIC/Passport</dt>
+                                <dd>${data.nric}</dd>
+                            </div>
+                            <div class="patient__data">
+                                <dt>Occupation</dt>
+                                <dd>${data.occupation}</dd>
+                            </div>
+                        </dl>
+                    </section>
+                    <section class="patient__section">
+                        <h2>Medical Notes</h2>
+                        <dl>
+                            <div class="patient__data">
+                                <dt>Last Visit</dt>
+                                <dd>${data.lastVisit} ${data.visitDuration}</dd>
+                            </div>
+                            <div class="flex flex-col">
+                                <dt>Remark</dt>
+                                <dd class="patient__data--remarkBox">${data.remark}</dd>
+                            </div>
+                        </dl>
+                    </section>
                 </div>
             </div>
         `;
@@ -201,9 +206,11 @@ const PatientPanel = (() => {
         panel.offsetHeight; 
         panel.classList.add('transition-all', 'duration-300');
         panel.classList.remove('translate-x-full');
+
         panel.innerHTML = `
             ${CloseButton}
-            <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto flex items-center justify-center">
+            <div role="status" aria-live="polite" aria-busy="true" class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto flex items-center justify-center">
+                <span class="sr-only">Loading Patient Panel</span>
                 <svg class="w-6 h-6 text-white animate-spin" viewBox="0 0 64 64" fill="none"
                     xmlns="http://www.w3.org/2000/svg" width="24" height="24">
                     <path
@@ -214,16 +221,15 @@ const PatientPanel = (() => {
                         stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" class="text-primary/50">
                     </path>
                 </svg>
-            <span class="sr-only">Loading...</span>
             </div>
         `;
-        addClose();
 
+        addClose();
         setTimeout(() => {
             createPanel(patientID);
+            panel.setAttribute('aria-busy', 'false');
             addClose();
         }, 500);
-
         trapHandler = handleTab;
         document.addEventListener('keydown', trapHandler);
     }

@@ -172,7 +172,7 @@ tbody td:last-child {
 }
 
 .table__action {
-  @apply text-primary hover:text-gray-500 align-middle cursor-pointer;
+  @apply text-primary align-middle cursor-pointer;
 }
 
 /* Patient Panel */
