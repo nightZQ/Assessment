@@ -254,7 +254,7 @@ const PatientPanel = (() => {
     return { openPanel, closePanel };
 })();
 
-const PatientTable = (() => {
+const togglePatientPanel = (() => {
     const init = () => {
         document.querySelectorAll('#patient-table tbody tr').forEach(row => {
             row.addEventListener('click', () => {
@@ -284,6 +284,14 @@ const PatientTable = (() => {
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+    fetch('./src/components/navbar.html')
+        .then(r => r.text())
+        .then(html => {
+            document.getElementById('navbar').innerHTML = html;
+    });
+    document.getElementById('search-trigger').addEventListener('click', () => {
+        document.getElementById('search').focus();
+    });
     NavSidebar.init();
-    PatientTable.init();
+    togglePatientPanel.init();
 });

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" />
-  <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="./src/assets/img/favicon.ico" type="image/x-icon">
   <link rel="stylesheet"href="./src/output.css">
   <title>Patient Management - PMS</title>
 </head>
@@ -35,7 +35,7 @@
 					</div>
 					<span class="flex gap-1 items-center">
 						<span class="text-subtitle font-medium">ZhenW</span>
-						<img class="avatar w-12" src="assets/img/avatar.webp" alt="User Avatar" />
+						<img class="avatar w-12" src="./src/assets/img/avatar.webp" alt="User Avatar" />
 					</span>
 				</div>
 			</header>
@@ -54,7 +54,7 @@
 						<tr data-patient-id="112">
 							<td>
 								<div class="table__patient">
-									<img class="hidden md:block avatar w-6 md:w-8" src="assets/img/patient_1.webp" alt="Patient 1 Avatar" />
+									<img class="hidden md:block avatar w-6 md:w-8" src="./src/assets/img/patient_1.webp" alt="Patient 1 Avatar" />
 									<div>
 										<p class="flex gap-1">
 											<span>John Doe</span>
@@ -82,7 +82,7 @@
 						<tr data-patient-id="113">
 							<td>
 								<div class="table__patient">
-									<img class="hidden md:block avatar w-6 md:w-8" src="assets/img/patient_2.webp" alt="Patient 2 Avatar" />
+									<img class="hidden md:block avatar w-6 md:w-8" src="./src/assets/img/patient_2.webp" alt="Patient 2 Avatar" />
 									<div>
 										<p>Jane Smith</p>
 										<p class="text__idNumber">id: 113</p>
@@ -106,7 +106,7 @@
 						<tr data-patient-id="11">
 							<td>
 								<div class="table__patient">
-									<img class="hidden md:block avatar w-6 md:w-8" src="assets/img/patient_3.webp" alt="Patient 3 Avatar" />
+									<img class="hidden md:block avatar w-6 md:w-8" src="./src/assets/img/patient_3.webp" alt="Patient 3 Avatar" />
 									<div>
 										<p>Maria Garcia</p>
 										<p class="text__idNumber">id: 114</p>
@@ -131,7 +131,7 @@
 						<tr>
 							<td>
 								<div class="table__patient">
-									<img aria-hidden="true" class="hidden md:block avatar w-6 md:w-8" src="assets/img/patient_4.webp" alt="Patient 4 Avatar" />
+									<img aria-hidden="true" class="hidden md:block avatar w-6 md:w-8" src="./src/assets/img/patient_4.webp" alt="Patient 4 Avatar" />
 									<div>
 										<p>Li Wei</p>
 										<p class="text__idNumber">id: 115</p>
@@ -173,35 +173,6 @@
 
 	</div>
 	<script src="./src/main.js"></script>
-	<script>
-		fetch('./src/components/navbar.html')
-			.then(r => r.text())
-            .then(html => {
-                document.getElementById('navbar').innerHTML = html;
-                setActiveNavItem();
-		});
-        function setActiveNavItem() {
-            const currentFile = 'index.html';
-            document.querySelectorAll('.navbar__item').forEach(link => {
-                const href = link.getAttribute('href');
-                const dataPage = link.getAttribute('data-page');
-                if (dataPage === 'patient') {
-                    link.classList.add('navbar__item--active');
-                    link.setAttribute('aria-current', 'page');
-                }
-				else
-				{
-                    link.classList.remove('navbar__item--active');
-                    link.removeAttribute('aria-current');
-                }
-            });
-        }
-	</script>
-	<script>
-		document.getElementById('search-trigger').addEventListener('click', () => {
-		document.getElementById('search').focus();
-	});
-	</script>
 
 </body>
 
