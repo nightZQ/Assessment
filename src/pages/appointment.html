@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.3.2/css/flag-icons.min.css" /> -->
+  <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet"href="../output.css">
+  <title>Appointment Management - PMS</title>
+</head>
+<body>
+    <div class="flex fixed h-screen w-screen bg-white">
+		<div id="navbar"></div>
+	</div>
+    <script src="../main.js"></script>
+	<script>
+        fetch('../components/navbar.html')
+            .then(r => r.text())
+            .then(html => {
+                document.getElementById('navbar').innerHTML = html;
+                setActiveNavItem();
+            });
+
+        function setActiveNavItem() {
+            const currentFile = 'appointment.html';
+            document.querySelectorAll('.navbar__item').forEach(link => {
+                const dataPage = link.getAttribute('data-page');
+                if (dataPage === 'appointment') {
+                    link.classList.add('navbar__item--active');
+                    link.setAttribute('aria-current', 'page');
+                } else {
+                    link.classList.remove('navbar__item--active');
+                    link.removeAttribute('aria-current');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
