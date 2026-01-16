@@ -25,6 +25,8 @@ body {
   padding: 0;
   background-color: var(--color-background-main);
   font-family: var(--font-family-inter);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary) var(--color-white);
 }
 
 /* Typography */
@@ -74,15 +76,15 @@ body {
 /* Icon */
 
 .icon {
-  @apply aspect-square w-6;
+  @apply aspect-square w-6 flex-shrink-0;
 }
 
 .icon--sm {
- @apply aspect-square w-4;
+ @apply aspect-square w-4 flex-shrink-0;
 }
 
 .icon--lg {
-  @apply aspect-square w-8;
+  @apply aspect-square w-8 flex-shrink-0;
 }
 
 .icon--dark {
@@ -117,6 +119,15 @@ body {
 
 .pagination__item--active {
   @apply text-primary;
+}
+
+#appointment-cards {
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+}
+
+#appointment-cards > div {
+    scroll-snap-align: start;
 }
 
 /* Navbar */

@@ -81,6 +81,55 @@ const patients = {
     },
 };
 
+// Appointment Data
+const appointments = {
+    'apt-001': {
+        patientId: '112',
+        date: '20 Jan 2026',
+        time: '02:30PM',
+        treatmentType: 'Hypertension Follow-up',
+        assignedDoctor: 'Dr. Sarah Johnson',
+        status: 'StatusScheduled',
+        remark: 'Elevated blood pressure, mild headaches'
+    },
+    'apt-002': {
+        patientId: '113',
+        date: '22 Jan 2026',
+        time: '10:00AM',
+        treatmentType: 'Routine Checkup',
+        assignedDoctor: 'Dr. Michael Chen',
+        status: 'StatusScheduled',
+        remark: 'General health assessment'
+    },
+    'apt-003': {
+        patientId: '114',
+        date: '25 Jan 2026',
+        time: '03:15PM',
+        treatmentType: 'Cardiology Consultation',
+        assignedDoctor: 'Dr. Emma Rodriguez',
+        status: 'StatusPending',
+        remark: 'Chest discomfort, shortness of breath'
+    },
+    'apt-004': {
+        patientId: '115',
+        date: '28 Jan 2026',
+        time: '11:00AM',
+        treatmentType: 'Orthopedic Examination',
+        assignedDoctor: 'Dr. James Kumar',
+        status: 'StatusScheduled',
+        remark: 'Back pain, reduced mobility'
+    },
+    'apt-005': {
+        patientId: '112',
+        date: '10 Jan 2026',
+        time: '02:30PM',
+        treatmentType: 'Post-Surgery Review',
+        assignedDoctor: 'Dr. Sarah Johnson',
+        status: 'StatusCompleted',
+        remark: 'Recovery assessment, wound check'
+    }
+};
+
 const PatientPanel = (() => {
     const overlay = document.getElementById('patient-overlay');
     const panel = document.getElementById('patient-panel');
@@ -283,15 +332,59 @@ const togglePatientPanel = (() => {
     return { init };
 })();
 
+const UpcomingAppointments = (() => {
+    const statusIcons = {
+        StatusPending: `<svg class="icon--sm fill-current text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2M12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8s8 3.58 8 8s-3.58 8-8 8m-.22-13h-.06c-.4 0-.72.32-.72.72v4.72c0 .35.18.68.49.86l4.15 2.49c.34.2.78.1.98-.24a.71.71 0 0 0-.25-.99l-3.87-2.3V7.72c0-.4-.32-.72-.72-.72"/></svg>`,
+        StatusScheduled:`<svg class="icon--sm fill-current text-primary" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M5 22q-.825 0-1.412-.587T3 20V6q0-.825.588-1.412T5 4h1V3q0-.425.288-.712T7 2t.713.288T8 3v1h8V3q0-.425.288-.712T17 2t.713.288T18 3v1h1q.825 0 1.413.588T21 6v6.375q0 .425-.288.713t-.712.287t-.712-.288t-.288-.712V10H5v10h6.225q.425 0 .7.288T12.2 21t-.287.713T11.2 22zM5 8h14V6H5zm0 0V6zm11.525 11.675l3.55-3.55q.3-.3.7-.3t.7.3t.3.713t-.3.712L17.25 21.8q-.3.3-.712.3t-.713-.3L13.7 19.675q-.3-.3-.3-.712t.3-.713t.713-.3t.712.3z"/></svg>`,
+        StatusCompleted: `<svg class="icon--sm text-success" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from NRK Core Icons by Norsk rikskringkasting - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12"/><path d="m17.608 9l-7.726 7.726L6 12.093l1.511-1.31l2.476 3.01l6.207-6.207z"/></g></svg>`,
+        // StatusCancel: `<svg class="icon--sm fill-current text-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from NRK Core Icons by Norsk rikskringkasting - https://creativecommons.org/licenses/by/4.0/ --><g fill="currentColor"><path fill-rule="evenodd" d="M12 3a9 9 0 1 0 0 18a9 9 0 0 0 0-18M1 12C1 5.925 5.925 1 12 1s11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12" clip-rule="evenodd" opacity=".5"/><path d="m15.293 7.293l-8 8l1.414 1.414l8-8z"/><path d="m8.707 7.293l8 8l-1.414 1.414l-8-8z"/></g></svg>`,
+    };
+
+    const getStatusIcon = (status) => {
+        return statusIcons[status];
+    };
+
+    const render = () => {
+        return Object.keys(appointments).map(key => {
+            const data = appointments[key];
+            icon_status = getStatusIcon(data.status) || '';
+            return `
+                <div role="dialog" aria-modal="true" tabindex="0" class="flex flex-col flex-shrink-0 bg-primary/90 rounded-3xl shadow-md/20 snap-start w-125 md:w-80 h-30 text-[14px] text-white">
+                    <p class="flex justify-between bg-bgAlt border border-secondaryText/50 rounded-t-3xl py-1 px-4 font-semibold text-primaryText">
+                        <span>${data.date} - ${data.time}</span>
+                        ${icon_status}
+                    </p>
+                    <div class="mt-1 ml-1 px-4 pb-2">
+                        <p>${data.treatmentType}</p>
+                        <p class="flex gap-1 items-start">
+                            <span class="sr-only">Doctor</span>
+                            <svg class="icon--sm fill-current text-white" xmlnsF="http://www.w3.org/2000/svg" viewBox="0 0 15 15"><!-- Icon from Maki by Mapbox - https://creativecommons.org/publicdomain/zero/1.0/ --><path fill="currentColor" d="M5.5 7A2.5 2.5 0 0 1 3 4.5v-2a.5.5 0 0 1 .5-.5H4a.5.5 0 0 0 0-1h-.5A1.5 1.5 0 0 0 2 2.5v2a3.49 3.49 0 0 0 1.51 2.87A4.4 4.4 0 0 1 5 10.5a3.5 3.5 0 1 0 7 0v-.57a2 2 0 1 0-1 0v.57a2.5 2.5 0 0 1-5 0a4.4 4.4 0 0 1 1.5-3.13A3.49 3.49 0 0 0 9 4.5v-2A1.5 1.5 0 0 0 7.5 1H7a.5.5 0 0 0 0 1h.5a.5.5 0 0 1 .5.5v2A2.5 2.5 0 0 1 5.5 7m6 2a1 1 0 1 1 0-2a1 1 0 0 1 0 2"/></svg>
+                            <span class="text-medium">${data.assignedDoctor}</span>
+                        </p>
+                        <p class="flex gap-1 items-start line-clamp-2">
+                            <span class="sr-only">Remark</span>
+                            <svg class="icon--sm fill-current text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols Light by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M5.616 19H14v-4.192q0-.344.232-.576t.576-.232H19V5.616q0-.27-.173-.443T18.385 5H5.615q-.269 0-.442.173T5 5.616v12.769q0 .269.173.442t.443.173m0 1q-.667 0-1.141-.475T4 18.386V5.615q0-.666.475-1.14T5.615 4h12.77q.666 0 1.14.475T20 5.615v8.002q0 .332-.13.632t-.349.518l-4.754 4.754q-.217.218-.517.348t-.633.131zm5.884-6.538H8.385q-.213 0-.357-.144q-.143-.144-.143-.357t.143-.356t.357-.143H11.5q.213 0 .356.144t.144.356t-.144.356t-.356.144M15.616 9.5H8.385q-.213 0-.357-.144t-.143-.357t.143-.356t.357-.143h7.23q.213 0 .357.144t.144.357t-.144.356t-.356.143M5 19V5z"/></svg>
+                            <span>${data.remark}</span>
+                        </p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    };
+
+    return { render };
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     fetch('./src/components/navbar.html')
         .then(r => r.text())
         .then(html => {
             document.getElementById('navbar').innerHTML = html;
+            NavSidebar.init();
     });
     document.getElementById('search-trigger').addEventListener('click', () => {
         document.getElementById('search').focus();
     });
-    NavSidebar.init();
+    document.getElementById('appointment-cards').innerHTML = UpcomingAppointments.render();
     togglePatientPanel.init();
 });
