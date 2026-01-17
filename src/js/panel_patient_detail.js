@@ -99,7 +99,7 @@ const PatientPanel = (() => {
                         <dl>
                             <div class="patient__data">
                                 <dt>Last Visit</dt>
-                                <dd>${data.lastVisit} ${data.visitDuration}</dd>
+                                <dd>${data.lastVisit_date} ${data.lastVisit_time} ${data.visitDuration}</dd>
                             </div>
                             <div class="flex flex-col">
                                 <dt>Remark</dt>

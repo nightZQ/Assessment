@@ -11,11 +11,6 @@ const NavSidebar = (() => {
             iconMenu.classList.toggle('hidden', isNavHidden);
             iconClose.classList.toggle('hidden', !isNavHidden);
             hamburger.setAttribute('aria-expanded', isNavHidden);
-
-            const username = document.getElementById('user-name');
-            if (window.innerWidth < 768) {
-                    username.classList.toggle('hidden', isNavHidden);
-            }
         });
     };
 

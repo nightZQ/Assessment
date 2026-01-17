@@ -27,14 +27,14 @@
 				</span>
 				<div class="flex h-14 gap-2 md:gap-4 justify-end items-center min-w-0 md:place-content-end">
 					<button aria-label="Add new patient" title="Add new patient" class="button__secondary button__icon flex-shrink-0 aspect-square w-7 md:w-9 rounded-2xl px-1 font-bold md:text-2xl text-center">+</button>
-					<div class="relative flex gap-2 p-1 md:p-2 bg-[#EBEBEB] rounded-2xl items-center">
+					<div class="relative flex gap-2 p-1 md:p-2 bg-bgAlt rounded-2xl items-center">
 						<button aria-hidden="true" id="search-trigger" tabindex="-1" class="cursor-pointer">	
 							<svg class="icon icon--dark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><path fill="currentColor" d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5A6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5S14 7.01 14 9.5S11.99 14 9.5 14"/></svg>
 						</button>
-						<input id="search" type="text" placeholder="Search patient" class="w-full text-primaryText placeholder:text-secondaryText focus:placeholder:text-primaryText focus:outline-hidden" />
+						<input id="search" type="text" placeholder="Search" class="w-full text-primaryText placeholder:text-secondaryText focus:placeholder:text-primaryText focus:outline-hidden" />
 					</div>
 					<span class="flex gap-1 items-center">
-						<span id="user-name" class="text-subtitle font-medium">ZhenW</span>
+						<span id="user-name" class="hidden md:inline text-subtitle font-medium">ZhenW</span>
 						<img class="avatar w-12" src="./src/assets/img/avatar.webp" alt="User Avatar" />
 					</span>
 				</div>
@@ -51,7 +51,7 @@
 						<button title="Next page" class="pagination__item">
 							<svg class="icon--sm" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M16.15 13H5q-.425 0-.712-.288T4 12t.288-.712T5 11h11.15L13.3 8.15q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L19.3 11.3q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.575 4.575q-.3.3-.712.288t-.713-.313q-.275-.3-.288-.7t.288-.7z"/></svg>
 						</button>
-						<span class="text-[12px]">Showing 1 of 1 results</span>
+						<span class="text-[12px]">Showing 4 of 4 results</span>
 					</div>
 				</section>
 				<section>
