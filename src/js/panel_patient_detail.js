@@ -1,0 +1,202 @@
+
+const PatientPanel = (() => {
+    const overlay = document.getElementById('patient-overlay');
+    const panel = document.getElementById('patient-panel');
+    let btn_close = null;
+    let trapHandler = null;
+
+    const ButtonClose = `
+        <button id="patient-close" aria-label="Close patient panel" class="button__secondary button__icon !bg-white/60 aspect-square w-fit rounded-2xl p-1">
+            <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
+        </button>
+    `;
+
+    const addClose = () => {
+        btn_close = document.getElementById('patient-close');
+        btn_close.removeEventListener('click', closePanel);
+        btn_close.addEventListener('click', closePanel);
+    }
+
+    const checkingID = (patientID) => {
+        const error = {
+          "keyNotFound": "Error: Fail to fetch! Patient ID not found.",
+          "dataMissing": "Error: Data missing for this patient."
+        };
+        let status = true;
+
+        if (!(patientID in patients))
+            status = "keyNotFound";
+        else
+        {
+            const data = patients[patientID];
+            if (!data || Object.keys(data).length === 0)
+                status = "dataMissing";
+        }
+        if (status !== true) {
+            console.error(error[status]);
+            panel.innerHTML = `
+                ${ButtonClose}
+                <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 text-center text-white">
+                    <p class="mt-4">${error[status]}</p>
+                    <p>Patient ID: ${patientID}</p>
+                </div>
+            `;
+            addClose();
+            return false;
+        }
+        return true;
+    };
+
+    const createPanel = (patientID) => {
+        if (!checkingID(patientID))
+            return;
+
+        const data = patients[patientID];
+        panel.innerHTML = `
+            ${ButtonClose}
+            <div role="dialog" aria-modal="true" tabindex="-1" class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto">
+                <span class="flex gap-2 mt-2">
+                    <h1 id="patient-name">${data.patient}</h1>
+                    <span aria-hidden="true" class="${data.nationality}"></span>
+                </span>
+                <div id="patient-content">
+                    <section class="flex flex-col ml-4">
+                        <p class="patient__data">
+                            <span class="sr-only">Contact</span>
+                            <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M19.95 21q-3.125 0-6.187-1.35T8.2 15.8t-3.85-5.55T3 4.05V3h5.9l.925 5.025l-2.85 2.875q.55.975 1.225 1.85t1.45 1.625q.725.725 1.588 1.388T13.1 17l2.9-2.9l5 1.025V21z"/></svg>
+                            <span>${data.contact}</span>
+                        </p>
+                        <p class="patient__data">
+                            <span class="sr-only">Email</span>
+                            <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE --><path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zM20 8l-7.475 4.675q-.125.075-.262.113t-.263.037t-.262-.037t-.263-.113L4 8v10h16zm-8 3l8-5H4zM4 8v.25v-1.475v.025V6v.8v-.012V8.25zv10z"/></svg>
+                            <span>${data.email}</span>
+                        </p>
+                        <p class="patient__data">
+                            <span class="sr-only">Date of birth</span>
+                            <svg class="icon--sm icon--light" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><!-- Icon from IconPark Outline by ByteDance - https://github.com/bytedance/IconPark/blob/master/LICENSE --><g fill="none"><path d="M8 40h32V24H8z"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M40 40H8m32 0H4h4m32 0h4m-4 0V24H8v16"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="m40 34l-4-2l-4 2l-4-2l-4 2l-4-2l-4 2l-4-2l-4 2m24-10v-9m-8 9v-9m-8 9v-9m16-5V8m-8 2V8m-8 2V8M8 24v16m32-16v16"/></g></svg>
+                            <span>${data.birthdate} ${data.age}</span>
+                        </p>
+                    </section>
+                    <section class="patient__section">
+                        <h2>Personal Details</h2>
+                        <dl>
+                            <div class="patient__data">
+                                <dt>Nationality</dt>
+                                <dd>${data.nationalityName}</dd>
+                            </div>
+                            <div class="patient__data">
+                                <dt>NRIC/Passport</dt>
+                                <dd>${data.nric}</dd>
+                            </div>
+                            <div class="patient__data">
+                                <dt>Occupation</dt>
+                                <dd>${data.occupation}</dd>
+                            </div>
+                        </dl>
+                    </section>
+                    <section class="patient__section">
+                        <h2>Medical Notes</h2>
+                        <dl>
+                            <div class="patient__data">
+                                <dt>Last Visit</dt>
+                                <dd>${data.lastVisit} ${data.visitDuration}</dd>
+                            </div>
+                            <div class="flex flex-col">
+                                <dt>Remark</dt>
+                                <dd class="patient__data--remarkBox">${data.remark}</dd>
+                            </div>
+                        </dl>
+                    </section>
+                </div>
+            </div>
+        `;
+    }
+
+    const handleTab = (e) => {
+        if (e.key !== 'Tab' || overlay.classList.contains('hidden'))
+            return ;
+        e.preventDefault();
+        btn_close.focus();
+    }
+
+    const openPanel = (patientID) => {
+        overlay.classList.remove('hidden');
+        panel.offsetHeight; 
+        panel.classList.add('transition-all', 'duration-300');
+        panel.classList.remove('translate-x-full');
+
+        panel.innerHTML = `
+            ${ButtonClose}
+            <div role="status" aria-live="polite" aria-busy="true" class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto flex items-center justify-center">
+                <span class="sr-only">Loading Patient Panel</span>
+                <svg class="w-6 h-6 text-white animate-spin" viewBox="0 0 64 64" fill="none"
+                    xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <path
+                        d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z"
+                        stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path
+                        d="M32 3C36.5778 3 41.0906 4.08374 45.1692 6.16256C49.2477 8.24138 52.7762 11.2562 55.466 14.9605C58.1558 18.6647 59.9304 22.9531 60.6448 27.4748C61.3591 31.9965 60.9928 36.6232 59.5759 40.9762"
+                        stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" class="text-primary/50">
+                    </path>
+                </svg>
+            </div>
+        `;
+
+        addClose();
+        setTimeout(() => {
+            createPanel(patientID);
+            panel.setAttribute('aria-busy', 'false');
+            addClose();
+        }, 500);
+        trapHandler = handleTab;
+        document.addEventListener('keydown', trapHandler);
+    }
+
+    const closePanel = () => {
+        if (trapHandler)
+            document.removeEventListener('keydown', trapHandler);
+        panel.classList.add('translate-x-full');
+        setTimeout(() => {
+            overlay.classList.add('hidden');
+            panel.innerHTML = '';
+            panel.classList.remove('transition-all', 'duration-300');
+        }, 400);
+    }
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !overlay.classList.contains('hidden')) {
+            closePanel();
+        }
+    });
+
+    return { openPanel, closePanel };
+})();
+
+const togglePatientPanel = (() => {
+    const init = () => {
+        document.querySelectorAll('#patient-table tbody tr').forEach(row => {
+            row.addEventListener('click', () => {
+                const patientID = row.getAttribute('data-patient-id');
+                PatientPanel.openPanel(patientID);
+            });
+
+            row.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const patientID = row.getAttribute('data-patient-id');
+                    PatientPanel.openPanel(patientID);
+                }
+            });
+
+            row.setAttribute('tabindex', '0');
+        });
+
+        document.querySelectorAll('#patient-table button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+        });
+    }
+
+    return { init };
+})();

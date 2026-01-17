@@ -213,5 +213,5 @@ tbody td:last-child {
 }
 
 .patient__data--remarkBox { 
-  @apply border mx-3 p-1 text-pretty md:text-balance wrap-anywhere md:wrap-break-word;
+  @apply border mx-2 p-1 text-pretty md:text-balance wrap-anywhere md:wrap-break-word;
 }

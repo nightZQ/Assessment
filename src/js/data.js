@@ -12,7 +12,8 @@ const patients = {
         age: '(36 yrs.)',
         nric: 'A1234567B',
         occupation: 'Software Engineer',
-        lastVisit: '10 Jan 2026 02:30PM',
+        lastVisit_date: '10 Jan 2026',
+        lastVisit_time: '02:30PM',
         visitDuration: '(45 min)',
         remark: 'Follow-up on hypertension management. Allergies: Penicillin, Shellfish. THis is aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa long text',
         vip: false
@@ -28,7 +29,8 @@ const patients = {
         age: '(37 yrs.)',
         nric: 'BP123456C',
         occupation: 'Marketing Manager',
-        lastVisit: '08 Jan 2026 10:00AM',
+        lastVisit_date: '08 Jan 2026',
+        lastVisit_time: '10:00AM',
         visitDuration: '(30 min)',
         remark: 'Routine check-up completed. Allergies: Aspirin',
         vip: true
@@ -44,7 +46,8 @@ const patients = {
         // age: '(33 yrs.)',
         // nric: 'ES987654D',
         // occupation: 'Teacher',
-        // lastVisit: '05 Jan 2026 03:15PM',
+        // lastVisit_date: '05 Jan 2026',
+        // lastVisit_time: '03:15PM',
         // visitDuration: '(50 min)',
         // remark: 'Prescribed new medication for allergies. No known drug allergies.',
         // vip: false
@@ -60,7 +63,8 @@ const patients = {
         age: '(33 yrs.)',
         nric: 'ES987654D',
         occupation: 'Teacher',
-        lastVisit: '05 Jan 2026 03:15PM',
+        lastVisit_date: '05 Jan 2026',
+        lastVisit_time: '03:15PM',
         visitDuration: '(50 min)',
         remark: 'Prescribed new medication for allergies. No known drug allergies.',
         vip: false
@@ -76,7 +80,8 @@ const patients = {
         age: '(40 yrs.)',
         nric: 'CN456789E',
         occupation: 'Accountant',
-        lastVisit: '03 Jan 2026 01:45PM',
+        lastVisit_date: '03 Jan 2026',
+        lastVisit_time: '01:45PM',
         visitDuration: '(35 min)',
         remark: 'Lab results reviewed, all normal. Allergies: Sulfonamides',
         vip: false
