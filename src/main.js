@@ -21,6 +21,7 @@ const NavSidebar = (() => {
 const patients = {
     '112': {
         patient: 'John Doe',
+        avatar: './src/assets/img/patient_1.webp',
         contact: '+1 234 567 8901',
         nationality: 'fi fi-us',
         nationalityName: 'American',
@@ -36,6 +37,7 @@ const patients = {
     },
     '113': {
         patient: 'Jane Smith',
+        avatar: './src/assets/img/patient_2.webp',
         contact: '+44 20 7946 0958',
         nationality: 'fi fi-gb',
         nationalityName: 'British',
@@ -51,6 +53,7 @@ const patients = {
     },
     '114': {
         // patient: 'Maria Garcia',
+        // avatar: './src/assets/img/patient_3.webp',
         // contact: '+34 91 123 4567',
         // nationality: 'fi fi-es',
         // nationalityName: 'Spanish',
@@ -64,8 +67,25 @@ const patients = {
         // remark: 'Prescribed new medication for allergies. No known drug allergies.',
         // vip: false
     },
+    '11D': {
+        patient: 'Maria Garcia',
+        avatar: './src/assets/img/patient_3.webp',
+        contact: '+34 91 123 4567',
+        nationality: 'fi fi-es',
+        nationalityName: 'Spanish',
+        email: 'maria.garcia@example.com',
+        birthdate: '10 Mar 1992',
+        age: '(33 yrs.)',
+        nric: 'ES987654D',
+        occupation: 'Teacher',
+        lastVisit: '05 Jan 2026 03:15PM',
+        visitDuration: '(50 min)',
+        remark: 'Prescribed new medication for allergies. No known drug allergies.',
+        vip: false
+    },
     '115': {
         patient: 'Li Wei',
+        avatar: './src/assets/img/patient_4.webp',
         contact: '+86 10 1234 5678',
         nationality: 'fi fi-cn',
         nationalityName: 'Chinese',
@@ -136,7 +156,7 @@ const PatientPanel = (() => {
     let btn_close = null;
     let trapHandler = null;
 
-    const CloseButton = `
+    const ButtonClose = `
         <button id="patient-close" aria-label="Close patient panel" class="button__secondary button__icon !bg-white/60 aspect-square w-fit rounded-2xl p-1">
             <svg class="icon--lg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M13.46 12L19 17.54V19h-1.46L12 13.46L6.46 19H5v-1.46L10.54 12L5 6.46V5h1.46L12 10.54L17.54 5H19v1.46z"/></svg>
         </button>
@@ -166,7 +186,7 @@ const PatientPanel = (() => {
         if (status !== true) {
             console.error(error[status]);
             panel.innerHTML = `
-                ${CloseButton}
+                ${ButtonClose}
                 <div class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 text-center text-white">
                     <p class="mt-4">${error[status]}</p>
                     <p>Patient ID: ${patientID}</p>
@@ -184,7 +204,7 @@ const PatientPanel = (() => {
 
         const data = patients[patientID];
         panel.innerHTML = `
-            ${CloseButton}
+            ${ButtonClose}
             <div role="dialog" aria-modal="true" tabindex="-1" class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto">
                 <span class="flex gap-2 mt-2">
                     <h1 id="patient-name">${data.patient}</h1>
@@ -257,7 +277,7 @@ const PatientPanel = (() => {
         panel.classList.remove('translate-x-full');
 
         panel.innerHTML = `
-            ${CloseButton}
+            ${ButtonClose}
             <div role="status" aria-live="polite" aria-busy="true" class="relative w-[80%] md:w-[50%] lg:w-[30%] h-full bg-primary/80 p-4 overflow-y-auto flex items-center justify-center">
                 <span class="sr-only">Loading Patient Panel</span>
                 <svg class="w-6 h-6 text-white animate-spin" viewBox="0 0 64 64" fill="none"
@@ -388,6 +408,78 @@ const UpcomingAppointments = (() => {
     return { render };
 })();
 
+const PatientListTable = (() => {
+    const BadgeVIP = `<svg aria-label="VIP" class="icon--sm text-vip" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Google Material Icons by Material Design Authors - https://github.com/material-icons/material-icons/blob/master/LICENSE --><path fill="currentColor" d="M9.68 13.69L12 11.93l2.31 1.76l-.88-2.85L15.75 9h-2.84L12 6.19L11.09 9H8.25l2.31 1.84zM20 10c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 2.03.76 3.87 2 5.28V23l6-2l6 2v-7.72A7.96 7.96 0 0 0 20 10m-8-6c3.31 0 6 2.69 6 6s-2.69 6-6 6s-6-2.69-6-6s2.69-6 6-6"/></svg>`;
+    const ButtonMoreActions = `
+        <button title="More actions" class="table__action button__icon">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><!-- Icon from Material Design Icons by Pictogrammers - https://github.com/Templarian/MaterialDesign/blob/master/LICENSE --><path fill="currentColor" d="M16 12a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2"/></svg>
+        </button>
+    `;
+
+    const render = () => {
+        const tableHeader = `
+            <table id="patient-table" class="sm:min-w-[290px] w-full border-collapse border border-border text-left overflow-x-auto md:overflow-x-auto">
+                <thead>
+                    <tr>
+                        <th>Patient Name</th>
+                        <th>Contact</th>
+                        <th>Nationality</th>
+                        <th>Datetime</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        const rows = Object.keys(patients).map(key => {
+            //11D share same data as 114, but 114 need for showing no data case
+            if (key === '11D')
+                return '';
+
+            let counter = 0;
+            ++counter;
+            const data = key === '114' ? patients['11D'] : patients[key];
+            const patientId = key === '114' ? '114' : (key === '115' ? '' : key);
+            return `
+                    <tr data-patient-id="${patientId}">
+                        <td>
+                            <div class="table__patient">
+                                <img class="hidden md:block avatar w-6 md:w-8" src="${data.avatar}" alt="Patient ${counter} Avatar" />
+                                <div>
+                                    <p class="flex gap-1">
+                                        <span>${data.patient}</span>
+                                        ${data.vip ? BadgeVIP : ''}
+                                    </p>
+                                    <p class="text__idNumber">id: ${key}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${data.contact}</td>
+                        <td>
+                            <div class="table__nationality">
+                                <span aria-hidden="true" class="hidden md:block ${data.nationality} icon__flag"></span>
+                                <span>${data.nationalityName}</span>
+                            </div>
+                        </td>
+                        <td>${data.lastVisit}</td>
+                        <td>
+                            ${ButtonMoreActions}
+                        </td>
+                    </tr>
+            `;
+        }).join('');
+
+        const tableFooter = `
+                </tbody>
+            </table>
+        `;
+
+        return tableHeader + rows + tableFooter;
+    }
+
+    return  { render };
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
     fetch('./src/components/navbar.html')
         .then(r => r.text())
@@ -398,6 +490,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('search-trigger').addEventListener('click', () => {
         document.getElementById('search').focus();
     });
+    document.getElementById('section-table').innerHTML = PatientListTable.render();
     document.getElementById('appointment-cards').innerHTML = UpcomingAppointments.render();
     togglePatientPanel.init();
 });
